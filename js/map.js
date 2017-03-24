@@ -1,6 +1,10 @@
 var iconStyle = new ol.style.Style({
       image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
         scale: 0.1,
+        anchor: [0.5, 46],
+        anchorXUnits: 'fraction',
+        anchorYUnits: 'pixels',
+        opacity: 0.75,
         src: 'data/images/map-icon.png'
       }))
     });
@@ -47,7 +51,7 @@ var clusters = new ol.layer.Vector({
     var style = styleCache[size];
     if (!style) {
       style = [new ol.style.Style({
-       /* image: new ol.style.Circle({
+        image: new ol.style.Circle({
           radius: 10,
           stroke: new ol.style.Stroke({
             color: '#fff'
@@ -55,11 +59,7 @@ var clusters = new ol.layer.Vector({
           fill: new ol.style.Fill({
             color: '#3399CC'
           })
-        }), */
-        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-          scale: 0.1,
-          src: 'data/images/marker-complaint.png'
-        })),
+        }),
         text: new ol.style.Text({
           text: size.toString(),
           fill: new ol.style.Fill({
@@ -76,15 +76,15 @@ var clusters = new ol.layer.Vector({
 
 var raster = new ol.layer.Tile({
     source: new ol.source.OSM({})
-    });
+});
 
 
 var map = new ol.Map({
-  layers: [raster, clusters],
-  renderer: 'canvas',
-  target: 'map',
-  view: new ol.View({
-    center: [0, 0],
-    zoom: 2
-  })
-});
+   layers: [raster, clusters],
+   renderer: 'canvas',
+   target: 'map',
+   view: new ol.View({
+     center: ol.proj.fromLonLat([-45.475006, -5.801333]),
+     zoom: 6.3
+   })
+}); 
